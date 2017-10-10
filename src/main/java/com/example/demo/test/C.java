@@ -20,7 +20,7 @@ public class C extends B {
 		// super B...			2.new B(); 执行B类的空参构造器
 		// super B...			3.new C(); 执行隐式的super()
 		// son C....			4.new C(); 执行自己的空参构造器
-		// super B ...ok		5.new C("ok");执行显示调用的super(smybol)
+		// super B ...ok		5.new C("ok");执行显示调用的super(smybol)//如果没有显示的调动super("ok") 是不会执行父类的带参数的构造器的 ！！！！
 		// son C....ok			6.new C("ok");执行自己的带参数构造函数
 	}
 
