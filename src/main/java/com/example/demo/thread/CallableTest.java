@@ -12,6 +12,7 @@ import java.util.concurrent.FutureTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//http://www.importnew.com/26850.html
 public class CallableTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(CallableTest.class);
