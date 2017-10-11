@@ -3,11 +3,12 @@
 
 
 ## aop 对controller 的返回结果进行定制
-
-@Retention(RetentionPolicy.RUNTIME)
-@Target(value = {ElementType.FIELD, ElementType.METHOD})
-public @interface ResultBeanAnnotation {
-}
+```java
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(value = {ElementType.FIELD, ElementType.METHOD})
+	public @interface ResultBeanAnnotation {
+	}
+```
 
 
 对带有@ResultBeanAnnotation的Controller 方法进行aop的拦截
