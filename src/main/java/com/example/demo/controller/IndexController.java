@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.aop.ResultBeanAnnotation;
 import com.example.demo.bean.CallBack;
 import com.example.demo.bean.CustomGenericResponse;
 import com.example.demo.bean.JqFilter;
 import com.example.demo.bean.Order;
+import com.example.demo.bean.ResultBean;
 import com.example.demo.bean.Role;
 import com.example.demo.bean.Rule;
 import com.example.demo.bean.User;
@@ -74,6 +76,24 @@ public class IndexController {
 		long end = System.currentTimeMillis();
 		logger.info("spend time :{} ------- pageNo is :{}", (end - start), pageNo);
 		return map;
+	}
+	@ResponseBody
+	@RequestMapping("/resultBean")
+	@ResultBeanAnnotation
+	public ResultBean<Map<String, Object>> testResultBean(@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+		long start = System.currentTimeMillis();
+		// pageNo-1非常重要, 默认是根据ID 升序排序的
+		PageRequest pageRequest = new PageRequest(pageNo - 1, PAGECONT, new Sort(Direction.ASC, "id"));
+		Page<User> userPages = userRepository.findAll(pageRequest);
+		
+		logger.info(userPages.toString());
+		// List<User> users = userRepository.findAll();
+		Map<String, Object> map = new HashMap<>();
+		map.put("userPages", userPages);
+		map.put("pageNo", pageNo);
+		long end = System.currentTimeMillis();
+		logger.info("spend time :{} ------- pageNo is :{}", (end - start), pageNo);
+		return new ResultBean<Map<String,Object>>(map);
 	}
 
 //		List<Role> roles = new ArrayList<>();
