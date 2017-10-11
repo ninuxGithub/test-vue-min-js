@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,6 +77,18 @@ public class IndexController {
 		long end = System.currentTimeMillis();
 		logger.info("spend time :{} ------- pageNo is :{}", (end - start), pageNo);
 		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/ajaxTest", produces= {"application/json;charset=utf-8"})
+	@ResultBeanAnnotation
+	public ResultBean<Map<String, Object>> ajaxTest(@RequestBody String username) {
+		System.out.println("from requestBody"+username);
+		List<User> users = userRepository.findAll();
+		Map<String, Object> map = new HashMap<>();
+		map.put("user", users);
+		map.put("username", username);
+		return new ResultBean<Map<String, Object>>(map);
 	}
 	@ResponseBody
 	@RequestMapping("/resultBean")
