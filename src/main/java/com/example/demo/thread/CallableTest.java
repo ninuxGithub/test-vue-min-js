@@ -79,6 +79,7 @@ public class CallableTest {
 			}
 		};
 		futureList.add(pool.submit(call));
+		System.out.println(pool.toString());
 
 		// get result
 		Future<Integer> future = futureList.get(0);
@@ -100,6 +101,7 @@ public class CallableTest {
 			e.printStackTrace();
 		}
 		pool.shutdown();
+		System.out.println(pool.toString());
 		pool = null;
 		futureList = null;
 		Long tx = System.currentTimeMillis();
