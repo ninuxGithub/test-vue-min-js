@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 public class TestLazyComponent {
 
 	static {
-		
-		System.err.println("init TestLazyComponent");
+		System.err.println("init TestLazyComponent static code..");
 	}
 	
 	public void say() {

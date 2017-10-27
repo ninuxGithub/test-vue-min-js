@@ -29,6 +29,7 @@ public class StaticTest {
 		}
 	}
 
+
 	public static void main(String[] args) {
 		StaticTest st = new StaticTest();
 		NonStatic nonStatic = st.new NonStatic();
@@ -36,6 +37,11 @@ public class StaticTest {
 
 		StaticClass staticClass = new StaticTest.StaticClass();
 		out.println(staticClass.getName());
+		
+		StaticClass staticClass2 = new StaticClass();
+		String name = staticClass2.getName();
+		System.out.println(name);
+		
 	}
 
 }

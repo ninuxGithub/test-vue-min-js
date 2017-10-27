@@ -19,9 +19,9 @@ import com.example.demo.bean.ResultBean;
 
 @Component
 @Aspect
-public class ControllerAop {
+public class ControllerAop2 {
 
-	private static final Logger logger = LoggerFactory.getLogger(ControllerAop.class);
+	private static final Logger logger = LoggerFactory.getLogger(ControllerAop2.class);
 
 	// @Pointcut("execution(* com.example.demo.controller..*(..)) and
 	// @annotation(org.springframework.web.bind.annotation.RequestMapping)")
@@ -30,7 +30,7 @@ public class ControllerAop {
 	};
 
 	@Around("controllerPointCut()")
-	public Object controllerAopProccess(ProceedingJoinPoint point) {
+	public Object controllerAopProccess(ProceedingJoinPoint point) throws Throwable {
 		logger.info("环绕通知");
 		long start = System.currentTimeMillis();
 		MethodSignature signature = (MethodSignature) point.getSignature();
@@ -40,15 +40,9 @@ public class ControllerAop {
 
 		ResultBean<?> resultBean = null;
 
-		try {
-			// ExtractAnnotationBean.extractAnnotation(Order.class);
-			// ExtractAnnotationBean.extractAnnotation("com.example.demo.aop.ResultBeanAnnotation");
-			resultBean = (ResultBean<?>) point.proceed();
-		} catch (Throwable e) {
-			resultBean = handleAopException(point, e);
-		}
+		resultBean = (ResultBean<?>) point.proceed();
 		long end = System.currentTimeMillis();
-		logger.info("controllerPointCut 拦截了 {}方法, 消耗的时间为：{} ms", methodName, (end - start));
+		logger.info(" controllerPointCut 拦截了 {}方法, 消耗的时间为：{} ms", methodName, (end - start));
 		return resultBean;
 	}
 

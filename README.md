@@ -84,6 +84,33 @@
 　　1.保证此变量对所有的线程的可见性，这里的“可见性”，如本文开头所述，当一个线程修改了这个变量的值，volatile 保证了新值能立即同步到主内存，以及每次使用前立即从主内存刷新。但普通变量做不到这点，普通变量的值在线程间传递均需要通过主内存（详见：Java内存模型）来完成。
 
 　　2.禁止指令重排序优化。有volatile修饰的变量，赋值后多执行了一个“load addl $0x0, (%esp)”操作，这个操作相当于一个内存屏障（指令重排序时不能把后面的指令重排序到内存屏障之前的位置），只有一个CPU访问内存时，并不需要内存屏障；（什么是指令重排序：是指CPU采用了允许将多条指令不按程序规定的顺序分开发送给各相应电路单元处理）。
+
+
+### springBean 懒加载
+结合注解@Lazy , 并且采用BeanFactory来获取bean,并且调用的时候创建
+
+
+### aop 的执行顺序
+	around--->before--after-->(如果有异常)例外通知-->最终通知
+	
+	多个aop:先进入的后出，类似队列【around-before-around2-before2-after2-return2-after-return】
+	
+	如果有例外：
+	ControllerAop - 环绕通知
+	ControllerAop - 方法签名：ResultBean com.example.demo.controller.IndexController.ajaxTest(String)
+	ControllerAop - "{\"username\":\"Jackson\"}"
+	ControllerAop - 前置通知
+	ControllerAop2 - 环绕通知
+	ControllerAop2 - 方法签名：ResultBean com.example.demo.controller.IndexController.ajaxTest(String)
+	ControllerAop2 - "{\"username\":\"Jackson\"}"
+	ControllerAop2 - 前置通知
+	2017-10-27 13:18:30 INFO  o.h.h.i.QueryTranslatorFactoryInitiator - HHH000397: Using ASTQueryTranslatorFactory
+	ControllerAop2 - 最终通知
+	ControllerAop2 - 例外通知/ by zero
+	2017-10-27 13:18:30 ERROR com.example.demo.aop.ControllerAop - ResultBean ajaxTest(String)error:/ by zero
+	ControllerAop - controllerPointCut 拦截了 ajaxTest方法, 消耗的时间为：9 ms
+	ControllerAop - 最终通知
+	ControllerAop - 后置通知
 	
 	
 	

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +31,7 @@ import com.example.demo.bean.Rule;
 import com.example.demo.bean.User;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.test.TestLazyComponent;
 import com.google.gson.Gson;
 
 @Controller
@@ -45,12 +47,18 @@ public class IndexController {
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	@Autowired
+	BeanFactory beanFactory;
+	
 //	@Autowired
 //	private RoleRepository roleRepository;
 
 	@RequestMapping(value = { "/"}, method = RequestMethod.GET)
 	public String index() {
 		logger.info("this is index page...");
+		TestLazyComponent bean = beanFactory.getBean(TestLazyComponent.class);
+		System.out.println("bean hashCode:"+ bean.hashCode());
+		bean.say();
 		return "index";
 	}
 	
@@ -83,11 +91,12 @@ public class IndexController {
 	@RequestMapping(value = "/ajaxTest", produces= {"application/json;charset=utf-8"})
 	@ResultBeanAnnotation
 	public ResultBean<Map<String, Object>> ajaxTest(@RequestBody String username) {
-		System.out.println("from requestBody"+username);
 		List<User> users = userRepository.findAll();
 		Map<String, Object> map = new HashMap<>();
 		map.put("user", users);
 		map.put("username", username);
+		int a =0;
+		a =10/a;
 		return new ResultBean<Map<String, Object>>(map);
 	}
 	@ResponseBody
