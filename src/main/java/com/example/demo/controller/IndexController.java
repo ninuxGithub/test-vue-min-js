@@ -32,6 +32,9 @@ import com.example.demo.bean.User;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.test.TestLazyComponent;
+import com.example.demo.test.TestLazyComponent2;
+import com.example.demo.test.TestLazyComponent3;
+import com.example.demo.test.TestLazyComponent4;
 import com.google.gson.Gson;
 
 @Controller
@@ -50,6 +53,9 @@ public class IndexController {
 	@Autowired
 	BeanFactory beanFactory;
 	
+	@Autowired
+	private TestLazyComponent2 bean2;
+	
 //	@Autowired
 //	private RoleRepository roleRepository;
 
@@ -58,6 +64,11 @@ public class IndexController {
 		logger.info("this is index page...");
 		TestLazyComponent bean = beanFactory.getBean(TestLazyComponent.class);
 		System.out.println("bean hashCode:"+ bean.hashCode());
+		System.out.println("bean hashCode:"+ bean2.hashCode());
+		TestLazyComponent3 bean3 = beanFactory.getBean(TestLazyComponent3.class);
+		System.out.println("bean hashCode:"+ bean3.hashCode());
+		TestLazyComponent4 bean4 = beanFactory.getBean(TestLazyComponent4.class);
+		System.out.println("bean hashCode:"+ bean4.hashCode());
 		bean.say();
 		return "index";
 	}

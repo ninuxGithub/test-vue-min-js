@@ -88,6 +88,7 @@
 
 ### springBean 懒加载
 结合注解@Lazy , 并且采用BeanFactory来获取bean,并且调用的时候创建
+在debug的时候，看到的是scope为singleton的会在启动服务器是实例化，而prototype是在请求的时候再实例化 
 
 
 ### aop 的执行顺序
