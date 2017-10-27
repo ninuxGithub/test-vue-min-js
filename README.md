@@ -93,7 +93,7 @@
 ### aop 的执行顺序
 	around--->before--after-->(如果有异常)例外通知-->最终通知
 	
-	多个aop:先进入的后出，类似队列【around-before-around2-before2-after2-return2-after-return】
+	多个aop:先进入的后出，类似栈【around-before-around2-before2-after2-return2-after-return】
 	
 	如果有例外：
 	ControllerAop - 环绕通知
