@@ -1,9 +1,20 @@
 package com.example.demo.thread;
 
+/**
+ * 场景：
+ * 
+ * 希望A执行到一半的时候，执行B业务，等B执行完毕后在执行A剩下的业务
+ * 
+ * 解决方法：采用lock , wait notify
+ *
+ */
 public class ObjectLock {
+	private static Object lock = new Object();
 
 	public static void main(String[] args) {
-		ObjectLock.testObjectLock();
+		for (int i = 0; i < 1; i++) {
+			ObjectLock.testObjectLock();
+		}
 	}
 
 	/**
@@ -11,21 +22,21 @@ public class ObjectLock {
 	 * 已经不能满足了。我们需要更细粒度的锁来控制执行顺序。
 	 */
 	public static void testObjectLock() {
-		Object lock = new Object();
 		Thread a = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				synchronized (lock) {
-					System.out.println("A 1");
+					System.err.println("A 1");
 					try {
-						System.out.println("A wait...");
+						System.err.println("A wait...");
 						lock.wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					System.out.println("A 2");
-					System.out.println("A 3");
+					System.err.println("A 2");
+					System.err.println("A 3");
+					lock.notify();
 				}
 
 			}

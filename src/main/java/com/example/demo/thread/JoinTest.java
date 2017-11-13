@@ -1,5 +1,12 @@
 package com.example.demo.thread;
 
+/**
+ * 场景：join
+ * 目前希望A线程完全执行完毕后，在执行B线程的业务
+ * 
+ * 解决：可以在B线程类采用，A.join()方法
+ * 
+ */
 public class JoinTest {
 
 	public static void main(String[] args) {
